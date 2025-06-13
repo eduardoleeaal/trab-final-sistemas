@@ -49,5 +49,6 @@ Senha: admin123
 ## 🤝 Contribuição
 
 Este projeto foi desenvolvido como trabalho acadêmico.
+Por [Eduardo Leal](https://github.com/eduardoleeaal) e [Matheus Navalski](https://github.com/MatheusNPJ).
 
 
