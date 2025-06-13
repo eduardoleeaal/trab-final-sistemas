@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2-1.fc42
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Tempo de geração: 13/06/2025 às 00:07
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- Host: localhost
+-- Tempo de geração: 13/06/2025 às 15:51
+-- Versão do servidor: 10.11.11-MariaDB
+-- Versão do PHP: 8.4.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,7 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `bd_biblioteca`
 --
-
 CREATE DATABASE IF NOT EXISTS `bd_biblioteca` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `bd_biblioteca`;
 
@@ -55,7 +54,7 @@ CREATE TABLE `tb_usuarios` (
 --
 
 INSERT INTO `tb_usuarios` (`id`, `usuario`, `senha`, `email`) VALUES
-(1, 'admin', 'admin123', 'atualizar@atualizar.com.br'),
+(1, 'admin', 'admin123', 'atualizar@atualizar.com.br');
 
 --
 -- Índices para tabelas despejadas
@@ -82,13 +81,13 @@ ALTER TABLE `tb_usuarios`
 -- AUTO_INCREMENT de tabela `tb_livros`
 --
 ALTER TABLE `tb_livros`
-  MODIFY `id_livro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_livro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `tb_usuarios`
 --
 ALTER TABLE `tb_usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restrições para tabelas despejadas

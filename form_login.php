@@ -1,6 +1,6 @@
 <div class="mt-3">
     <h3>Login</h3>
-    <form action="validar.php" method="post">
+    <form action="includes/validar.php" method="post">
         <div class="mb-3">
             <label for="usuario" class="form-label">Usuário:</label>
             <input type="text" class="form-control" name="usuario" id="usuario" required>

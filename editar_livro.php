@@ -1,11 +1,11 @@
-<?php require_once 'lock.php'; ?>
+<?php require_once 'includes/lock.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Livro</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -14,7 +14,7 @@
             <div class="navbar-nav">
                 <a class="nav-link" href="index.php">Home</a>
                 <a class="nav-link" href="restrita.php">Área Restrita</a>
-                <a class="nav-link" href="logout.php">Logout</a>
+                <a class="nav-link" href="includes/logout.php">Logout</a>
             </div>
         </div>
     </nav>
@@ -23,7 +23,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <?php 
-                require_once 'functions.php';
+                require_once 'includes/functions.php';
                 verificar_codigo();
 
                 if (!isset($_GET['id_livro'])) {
@@ -32,7 +32,7 @@
                 }
 
                 $id = $_GET['id_livro'];
-                require_once 'conexao.php';
+                require_once 'includes/conexao.php';
                 $conn = conectar_banco();
 
                 if (!is_numeric($id) || $id <= 0) {
@@ -40,21 +40,22 @@
                     exit;
                 }
 
-                $query = "SELECT id_livro, titulo, descricao FROM tb_livros WHERE id_livro = " . (int)$id;
-                $resultado = mysqli_query($conn, $query);
-                $linhas_afetadas = mysqli_affected_rows($conn);
+                // CORRIGIR: Incluir validação do usuário
+                $query = "SELECT id_livro, titulo, descricao FROM tb_livros WHERE id_livro = ? AND usuario_id = ?";
+                $stmt = mysqli_prepare($conn, $query);
+                mysqli_stmt_bind_param($stmt, "ii", $id, $_SESSION['id']);
+                mysqli_stmt_execute($stmt);
+                $resultado = mysqli_stmt_get_result($stmt);
 
-                if ($linhas_afetadas == 0) {
-                    echo '<div class="alert alert-warning">Livro não encontrado!</div>';
-                    exit;
-                }
-
-                if ($linhas_afetadas < 0) {
-                    echo '<div class="alert alert-danger">Erro na consulta!</div>';
+                if (mysqli_num_rows($resultado) == 0) {
+                    echo '<div class="alert alert-danger">Livro não encontrado ou você não tem permissão para editá-lo!</div>';
+                    mysqli_stmt_close($stmt);
+                    mysqli_close($conn);
                     exit;
                 }
 
                 $livro = mysqli_fetch_assoc($resultado);
+                mysqli_stmt_close($stmt);
                 ?>
 
                 <div class="card">
@@ -62,7 +63,7 @@
                         <h2>Editar Livro</h2>
                     </div>
                     <div class="card-body">
-                        <form action="livro_editado.php" method="post">
+                        <form action="./includes/livro_editado.php" method="post">
                             <div class="mb-3">
                                 <label for="titulo" class="form-label">Título:</label>
                                 <input type="text" class="form-control" name="titulo" id="titulo" 

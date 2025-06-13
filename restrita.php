@@ -1,11 +1,11 @@
-<?php require_once 'lock.php'; ?>
+<?php require_once 'includes/lock.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Área Restrita</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -13,7 +13,7 @@
             <a class="navbar-brand" href="#">Biblioteca</a>
             <div class="navbar-nav">
                 <a class="nav-link" href="index.php">Home</a>
-                <a class="nav-link" href="logout.php">Logout</a>
+                <a class="nav-link" href="includes/logout.php">Logout</a>
             </div>
         </div>
     </nav>
@@ -26,7 +26,7 @@
                 <h4>Cadastrar Novo Livro</h4>
             </div>
             <div class="card-body">
-                <form action="cadastrar_livros.php" method="post">
+                <form action="./includes/cadastrar_livros.php" method="post">
                     <div class="mb-3">
                         <label for="titulo" class="form-label">Título:</label>
                         <input type="text" class="form-control" name="titulo" id="titulo" required>
@@ -41,7 +41,7 @@
         </div>
 
         <?php
-        require_once 'functions.php';
+        require_once 'includes/functions.php';
         verificar_codigo();
 
         $id = $_SESSION['id'];
@@ -50,7 +50,7 @@
                 ON tb_livros.usuario_id = tb_usuarios.id 
                 WHERE usuario_id = $id";
         
-        require_once 'conexao.php';
+        require_once 'includes/conexao.php';
         $conn = conectar_banco();
         $resultado = mysqli_query($conn, $sql);
 
@@ -74,7 +74,7 @@
                                 <h5 class="card-title">' . htmlspecialchars($livro_atual) . '</h5>
                                 <p class="card-text">' . htmlspecialchars($livro_descricao) . '</p>
                                 <a href="editar_livro.php?id_livro='.$id_livro.'" class="btn btn-warning btn-sm">Editar</a>
-                                <a href="excluir_livro.php?id_livro='.$id_livro.'" class="btn btn-danger btn-sm" 
+                                <a href="./includes/excluir_livro.php?id_livro='.$id_livro.'" class="btn btn-danger btn-sm" 
                                    onclick="return confirm(\'Excluir este livro?\')">Excluir</a>
                             </div>
                         </div>
